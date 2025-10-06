@@ -1,15 +1,4 @@
-function validateLogin() {
-    const username = document.getElementById("login-username").value.trim();
-    const password = document.getElementById("login-password").value.trim();
-
-    if (username === "" || password === "") {
-        alert("Please fill all fields!");
-        return false;
-    }
-    return true;
-}
-
-function validateRegister() {
+function registerUser() {
     const username = document.getElementById("reg-username").value.trim();
     const password = document.getElementById("reg-password").value.trim();
 
@@ -17,9 +6,30 @@ function validateRegister() {
         alert("Please fill all fields!");
         return false;
     }
-    if (password.length < 4) {
-        alert("Password must be at least 4 characters long!");
+
+    // Store user in localStorage
+    if (localStorage.getItem(username)) {
+        alert("User already exists!");
         return false;
     }
-    return true;
+
+    localStorage.setItem(username, password);
+    alert("Registration successful! Please login.");
+    window.location.href = "index.html";
+    return false;
+}
+
+function loginUser() {
+    const username = document.getElementById("login-username").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    const storedPassword = localStorage.getItem(username);
+
+    if (storedPassword && storedPassword === password) {
+        alert(`Welcome ${username}!`);
+    } else {
+        alert("Invalid credentials!");
+    }
+
+    return false;
 }
